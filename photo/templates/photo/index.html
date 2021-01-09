@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %} Фотосессии {% endblock %}
+
+{% block heading_page %} Фотосессии {% endblock %}
+
+{% block description_page %} . {% endblock %}
+
+{% block header_extra%}
+<a href="/photo/add-photosession"> <button type="button" class="btn btn-success">Создать<span style="border: none" class="btn-icon-right"><i class="fa fa-plus"></i></span></button></a>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-lg-12">
+    {% if not PhotoSessions%}
+        <div class="card">
+        <div class="card-body">
+    <h4 class="text-black font-w100 mb-0 text-center">У вас ещё нет фотосессий, чтобы создать, нажмите <a href="add-photosession">сюда</a></h4>
+    {% else %}
+    <div class="card">
+        <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-responsive-md">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:80px;"><strong>#</strong></th>
+                                                <th><strong>Фотограф</strong></th>
+                                                <th><strong>Город</strong></th>
+                                                <th><strong>Яхта</strong></th>
+                                                <th><strong>Дата</strong></th>
+                                                <th><strong>Статус</strong></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        {% for item in PhotoSessions %}
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>{{ item.pk}}</strong></td>
+                                                <td>{{ item.user }}</td>
+                                                <td>{{ item.city }}</td>
+                                                <td>{{ item.boat }}</td>
+                                                <td>{{ item.created_at}}</td>
+                                                <td><span class="badge light badge-success">{{ item.status }}</span></td>
+                                                <td>
+													<div class="dropdown">
+														<button type="button" class="btn btn-success light sharp" data-toggle="dropdown" aria-expanded="false">
+															<svg width="20px" height="20px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+														</button>
+														<div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);">
+															<a class="dropdown-item" href="#">Редактировать</a>
+															<a class="dropdown-item" href="#">Удалить</a>
+														</div>
+													</div>
+												</td>
+                                            </tr>
+
+
+                                        </tbody>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </table>
+                                </div>
+                            </div>
+    </div>
+</div>
+
+
+{% endblock %}
