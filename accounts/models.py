@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from photo.models import city
+from photo.models import City
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -9,7 +9,7 @@ from django.dispatch import receiver
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=256, default=None, null=True, blank=True, verbose_name="Номер телефона")
-    user_city = models.ManyToManyField(city, blank=True, default=None)
+    user_city = models.ManyToManyField(City, blank=True, default=None)
 
     def get_city(self):
         return ",".join([str(p) for p in self.user_city.all()])

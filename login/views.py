@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.shortcuts import render
 from .form import UserLoginForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from photo.models import PhotoTool
@@ -29,10 +29,8 @@ def user_profile(request):
 
     return render(request, 'login/profile.html', {'tool': tool})
 
+
 @login_required(login_url='/')
 def user_logout(request):
     logout(request)
     return redirect('/')
-
-
-

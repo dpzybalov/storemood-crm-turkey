@@ -29,7 +29,7 @@
                                             <a class="nav-link" data-toggle="tab" href="#profile"><i class="las la-user mr-2"></i> Клиент</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#contact"><i class="las la-image mr-2"></i> Contact</a>
+                                            <a class="nav-link" data-toggle="tab" href="#contact"><i class="las la-book mr-2"></i> Печатная продукция</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" data-toggle="tab" href="#message"><i class="la la-envelope mr-2"></i> Message</a>
@@ -38,21 +38,19 @@
                                     <div class="tab-content">
                                         <div class="tab-pane fade active show" id="home" role="tabpanel">
                                             <div class="pt-4">
-                                                <form action="/photo/add-photosession" method="post">
-                                                 {% csrf_token %}
-                                                 {{ form1.as_p }}
-                                                    <button type="submit" class="btn">Отпаравить</button>
-                                                    </form>
+
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="profile">
                                              <div class="pt-4">
-                                                {% csrf_token %}
-                                                {{ form2.as_p }}
+
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="contact">
                                              <div class="pt-4">
+                                                 <h4>Заказ</h4>
+                                                 <input type="file" multiple>
+                                                    <button type="submit" class="btn">Отпаравить</button>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="message">
@@ -68,5 +66,67 @@
                     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var files = []
+        FilePond.registerPlugin(FilePondPluginFileValidateSize);
+        FilePond.registerPlugin(FilePondPluginFileValidateType);
+        FilePond.setOptions({
+            allowMultiple:true,
+            maxFiles:100,
+            maxFileSize: '20MB'
+        })
+        const inputElement = document.querySelector('input[type="file"]');
+        const pond = FilePond.create( inputElement, {
+            acceptedFileTypes:['image/png', 'image/jpeg'],
+            onaddfile: (err, fileItem) => {
+                if (!err) {
+                files.push(fileItem.file)
+                }
+                console.log(files)
+            },
+            onremovefile: (err, fileItem) => {
+                const index = files.indexOf(fileItem.file)
+                if (index > -1) {
+                    files.splice(index, 1)
+                }
+                console.log(files)
+            }
+        } );
+
+        var formData = new FormData();
+        $(document).on('click', '#saveBtn', function(e) {
+            formData.append('length', files.length)
+            formData.append('title', $('#title').val())
+            formData.append('description', $('#description').val())
+            for (var i = 0; i < files.length; i++) {
+                formData.append('images' + i, files[i])
+            }
+            formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "add-photosessions" %}',
+                data: formData,
+                cache: false,
+                processData: false,
+                contentType: false,
+                enctype: 'multipart/form-data',
+                success: function (){
+                    alert('The post has been created!')
+                },
+                error: function(xhr, errmsg, err) {
+                    console.log(xhr.status + ":" + xhr.responseText)
+                }
+            })
+        })
+    })
+</script>
+
+        <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 
 {% endblock %}
