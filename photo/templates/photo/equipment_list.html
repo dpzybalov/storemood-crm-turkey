@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %} Моё оборудования {% endblock %}
+
+{% block heading_page %} Моё оборудование {% endblock %}
+
+{% block description_page %} {% endblock %}
+
+
+{% block breadcrumb %}
+                            <li class="breadcrumb-item"><a href="/photo">Оборудование</a></li>
+                            <li class="breadcrumb-item active"><a>Моё оборудования</a></li>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="col-lg-12">
+<div class="col-xl-12 col-xxl-12">
+                        <div class="card row">
+                            <div class="card-body">
+
+                                	{% if not tool%}
+                                	<div class="alert alert-info alert-dismissible alert-alt fade show">
+									<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+										<circle cx="12" cy="12" r="10"></circle>
+										<line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>
+									</svg>
+
+                                    <strong>Info!</strong> У вас ещё нет оборудования
+								</div>
+                                {% else %}
+								<div class="table-responsive">
+                                    <table class="table header-border table-hover verticle-middle">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="text-black font-w300 text-left"> </th>
+                                                <th scope="col" class="text-black font-w300 text-left">Наименование</th>
+                                                <th scope="col" class="text-black font-w300 text-left">Тип оборудования</th>
+                                                <th scope="col" class="text-black font-w300 text-left">Состояние</th>
+												<th scope="col" class="text-black font-w300 text-left">Дата выдачи</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+								{% for item in tool %}
+                                            <tr>
+                                                <th>
+													{% if item.Photo_tool_type.icon != 0 %}
+														<i class=" {{ item.Photo_tool_type.icon_type}} "></i>
+													{% else %}
+														<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+															<circle cx="12" cy="12" r="10"></circle>
+															<line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>
+														</svg>
+													{% endif %}
+												</th>
+
+
+                                                <td>
+													{{ item.title}}
+												</td>
+
+
+                                                <td>
+													{{item.Photo_tool_type}}
+                                                </td>
+
+
+                                                <td>
+													{{item.state}}
+                                                </td>
+
+
+                                                <td>
+													{{item.DateEdit }}
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+								{% endfor %}
+							{% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+</div>
+
+
+{% endblock %}
