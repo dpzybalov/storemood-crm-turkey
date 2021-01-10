@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import PhotoSessions
+from .models import PhotoSessions, PhotoTool
 from .forms import PhotosessionsForm, ClientForm
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -44,3 +44,8 @@ def add_photosession(request):
         form1 = PhotosessionsForm()
         form2 = ClientForm(request.POST)
     return render(request, 'photo/add_photosession.html', {'form1': form1, 'form2': form2})
+
+@login_required(login_url='/')
+def equipment_list(request):
+    tool = PhotoTool.objects.filter(owner = request.user)
+    return render(request, 'photo/equipment_list.html', {'tool': tool})
