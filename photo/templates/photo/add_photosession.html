@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Add photosession {% endblock %}
+{% block title %} Добавить фотосессию {% endblock %}
 
 {% block heading_page %} Создание фотосессии {% endblock %}
 
@@ -38,20 +38,53 @@
                                     <div class="tab-content">
                                         <div class="tab-pane fade active show" id="home" role="tabpanel">
                                             <div class="pt-4">
-
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="profile">
-                                             <div class="pt-4">
-
+                                                 <h4>Заказ</h4>
+                                                 <input type="file" multiple>
+                                                
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="contact">
                                              <div class="pt-4">
-                                                 <h4>Заказ</h4>
-                                                 <input type="file" multiple>
-                                                    <button type="submit" class="btn">Отпаравить</button>
+
                                             </div>
+                                        </div>
+
+                                        <div class="tab-pane fade" id="profile">
+
+                                            <h4 class="card-title mt-4 mb-4">Контактные данные клиента</h4>
+
+                                                <div class="col-lg-6 mb-2">
+                                                    <div class="form-group">
+                                                        <label class="text-label">Имя*</label>
+                                                        <input type="text" name="firstName" class="form-control" placeholder="Иван" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mb-2">
+                                                    <div class="form-group">
+                                                        <label class="text-label">Фамилия*</label>
+                                                        <input type="text" name="lastName" class="form-control" placeholder="Петров" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-2">
+                                                    <div class="form-group">
+                                                        <label class="text-label">Email*</label>
+                                                        <input type="email" class="form-control" id="inputGroupPrepend2" aria-describedby="inputGroupPrepend2" placeholder="example@example.com" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-2">
+                                                    <div class="form-group">
+                                                        <label class="text-label">Номер телефона*</label>
+                                                        <input type="text" name="phoneNumber" class="form-control" placeholder="+7(999)-999-99-99" required="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 mb-3">
+                                                    <div class="form-group">
+                                                        <label class="text-label">Город клиента*</label>
+                                                        <input type="text" name="place" class="form-control" required="">
+                                                    </div>
+                                                </div>
+
+
                                         </div>
                                         <div class="tab-pane fade" id="message">
                                              <div class="pt-4">
@@ -66,6 +99,7 @@
                     </div>
 </div>
 
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var files = []
@@ -73,8 +107,6 @@
         FilePond.registerPlugin(FilePondPluginFileValidateType);
         FilePond.setOptions({
             allowMultiple:true,
-            maxFiles:100,
-            maxFileSize: '20MB'
         })
         const inputElement = document.querySelector('input[type="file"]');
         const pond = FilePond.create( inputElement, {
@@ -97,16 +129,16 @@
         var formData = new FormData();
         $(document).on('click', '#saveBtn', function(e) {
             formData.append('length', files.length)
-            formData.append('title', $('#title').val())
-            formData.append('description', $('#description').val())
+            formData.append('City', $('#City').val())
+            formData.append('Boat', $('#Boat').val())
             for (var i = 0; i < files.length; i++) {
                 formData.append('images' + i, files[i])
             }
             formData.append('csrfmiddlewaretoken', '{{ csrf_token }}')
 
             $.ajax({
-                type: 'POST',
                 url: '{% url "add-photosessions" %}',
+                type: 'POST',
                 data: formData,
                 cache: false,
                 processData: false,
@@ -123,10 +155,15 @@
     })
 </script>
 
+
+
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+       <!-- FilePond Stuff -->
+        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
         <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
         <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
         <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
-        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 
 {% endblock %}

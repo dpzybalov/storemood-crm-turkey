@@ -19,8 +19,8 @@ class PhotoSessions(models.Model):
     comment = models.TextField(blank=True)
     user = models.CharField(max_length=30, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    city = models.ForeignKey('City', on_delete=models.PROTECT)
-    boat = models.ForeignKey('Boat', on_delete=models.PROTECT)
+    city = models.CharField(max_length=30, blank=True)
+    boat = models.CharField(max_length=30, blank=True)
     status = models.CharField(max_length=30, default='Новая')
     created_at = models.DateField(auto_now=True)
     Client = models.ManyToManyField(Client, blank=True)
@@ -32,9 +32,18 @@ class PhotoSessions(models.Model):
         verbose_name = 'Фотосессия'
         verbose_name_plural = 'Фотосессии'
 
+class salsi(models.Model):
+    Photosessions = models.ForeignKey(PhotoSessions, on_delete=models.RESTRICT)
+    images = models.FileField(upload_to= 'photos/', default=None)
+
+    class Meta:
+        verbose_name = 'Продажи'
+        verbose_name_plural = 'Продажиe'
+
 
 class PhotoSessionsImage(models.Model):
     Photosessions = models.ForeignKey(PhotoSessions, on_delete=models.RESTRICT)
+    images = models.FileField(upload_to= 'photos/', default=None)
 
 
 class City(models.Model):

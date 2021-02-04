@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import PhotoSessions, PhotoTool
+from .models import PhotoSessions, PhotoSessionsImage, PhotoTool
 from django.contrib.auth.decorators import login_required
 
 
@@ -20,6 +20,21 @@ def index_photo(request):
 
 @login_required(login_url='/')
 def add_photosession(request):
+    if request.method == 'POST':
+        length = request.POST.get('length')
+        city = request.POST.get('City')
+        boat = request.POST.get('Boat')
+
+        photosessions = PhotoSessions.objects.create(
+            title = '1'
+        )
+
+        for file_num in range(0, int(length)):
+            PhotoSessionsImage.objects.create(
+                Photosessions= photosessions,
+                images=request.FILES.get(f'images{file_num}')
+            )
+
     return render(request, 'photo/add_photosession.html')
 
 
