@@ -19,6 +19,8 @@
 <div class="col-xl-12 col-xxl-12">
                         <div class="card row">
                             <div class="card-body">
+                                <form method="post" action="">
+                                    {% csrf_token %}
                                 <!-- Nav tabs -->
                                 <div class="default-tab">
                                     <ul class="nav nav-tabs" role="tablist">
@@ -40,7 +42,7 @@
                                             <div class="pt-4">
                                                  <h4>Заказ</h4>
                                                  <input type="file" multiple>
-                                                
+                                                <button type="submit" class="btn btn-success">Отправить</button>
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="contact">
@@ -84,6 +86,8 @@
                                                     </div>
                                                 </div>
 
+                                            <button type="submit" class="btn btn-success" sun>Отправить</button>
+
 
                                         </div>
                                         <div class="tab-pane fade" id="message">
@@ -92,6 +96,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                </form>
                             </div>
 
                         </div>

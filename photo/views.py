@@ -21,17 +21,25 @@ def index_photo(request):
 @login_required(login_url='/')
 def add_photosession(request):
     if request.method == 'POST':
-        length = request.POST.get('length')
-        city = request.POST.get('City')
-        boat = request.POST.get('Boat')
+        length = 3
+        city = 'Antalya'
+        boat = 'Realta'
+        firstName = '123'
+        lastName = '123'
+        phoneNumber = '123'
+        place = '123'
+        user = 'Dpzybalov'
 
         photosessions = PhotoSessions.objects.create(
-            title = '1'
+            title='1',
+        city = 'Antalya',
+        boat = 'Realta',
+        user = 'Dpzybalov'
         )
 
         for file_num in range(0, int(length)):
             PhotoSessionsImage.objects.create(
-                Photosessions= photosessions,
+                Photosessions=photosessions,
                 images=request.FILES.get(f'images{file_num}')
             )
 

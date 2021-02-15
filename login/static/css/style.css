@@ -19982,7 +19982,6 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 
 /*$primary  : #7356f1 !default;*/
 [data-theme-version="transparent"] {
-  background: url("../images/body/12.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;

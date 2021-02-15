@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 
 
 class Client(models.Model):
-    fio = models.CharField(max_length=50)
-    telephone = models.CharField(max_length=15)
-    email = models.EmailField()
-    gorod = models.CharField(max_length=20)
+    fio = models.CharField(max_length=50, blank=True, default=None)
+    telephone = models.CharField(max_length=15, blank=True, default=None)
+    email = models.EmailField(blank=True, default=None)
+    gorod = models.CharField(max_length=20, blank=True, default=None)
     date_prib = models.DateField
 
     class Meta:
